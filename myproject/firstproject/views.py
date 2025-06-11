@@ -119,6 +119,7 @@ class CategoryCreateView(CreateView):
     template_name = 'categories/category_form.html'
     success_url = reverse_lazy('category_list')
 
+#Отзывы
 class ReviewsListView(ListView):
     model = Reviews
     template_name = 'reviews/reviews_list.html'
@@ -129,3 +130,29 @@ class ReviewsCreateView(CreateView):
     form_class = ReviewsForm
     template_name = 'reviews/reviews_form.html'
     success_url = reverse_lazy('reviews_list')
+
+#Заказы
+class OrderListView(ListView):
+    model = Order
+    template_name = 'orders/orders_list.html'
+    context_object_name = 'orders'
+     
+    def get_queryset(self):
+        return Order.objects.select_related(
+            'user', 'status', 'delivery', 'payment_method'
+        ).prefetch_related('orderdetails_set__product')
+
+class DeliveryListView(ListView):
+    model = Delivery
+    template_name = 'delivery/delivery_list.html'
+    context_object_name = 'delivery'
+
+class PayMethodListView(ListView):
+    model = PayMethod
+    template_name = 'paymethod/paymethod_list.html'
+    context_object_name = 'paymethod'
+
+class StatusListView(ListView):
+    model = Status
+    template_name = 'status/status_list.html'
+    context_object_name = 'status'

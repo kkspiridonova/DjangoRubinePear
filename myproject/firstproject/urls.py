@@ -31,4 +31,10 @@ urlpatterns = [
     path('products/category/<int:pk>/update',CategoryUpdateView.as_view(),name='category_update'),
     path('products/category/<int:pk>/delete',CategoryDeleteView.as_view(),name='category_delete'),
     path('products/category/create',CategoryCreateView.as_view(),name='category_create'),
+
+    path('orders',OrderListView.as_view(),name='orders_list'),
+    path('orders/delivery',DeliveryListView.as_view(),name='delivery_list'),
+    path('orders/status',StatusListView.as_view(),name='status_list'),
+    path('oders/paymethod',PayMethodListView.as_view(),name='paymethod_list'),
+
 ]

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}<htyls>{% endblock %}
+{% block content %}
+<section class="catalog-wrapper">
+    <div class="catalog-sidebar">
+        <h3>Навигация</h3>
+        <ul>
+            <li><a href="{% url 'orders_list' %}">Заказы</a></li>
+            <li><a href="{% url 'delivery_list' %}">Доставки</a></li>
+            <li><a href="{% url 'paymethod_list' %}">Способы оплаты</a></li>
+        </ul>
+    </div>
+    <div class="catalog">
+        <h2>Статусы</h2>
+
+        <div class="product-grid">
+            {% for status in status %}
+                <div class="product-card">
+
+                    <h3>{{ status.name }}</h3>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

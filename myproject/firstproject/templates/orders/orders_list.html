@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Заказы{% endblock %}
+{% block content %}
+<section class="catalog-wrapper">
+    <div class="catalog-sidebar">
+        <h3>Навигация</h3>
+        <ul>
+            <li><a href="{% url 'delivery_list' %}">Доставки</a></li>
+            <li><a href="{% url 'status_list' %}">Статусы</a></li>
+            <li><a href="{% url 'paymethod_list' %}">Способы оплаты</a></li>
+        </ul>
+    </div>
+    <div class="catalog">
+        <h2>Список заказов</h2>
+
+        <div class="orders-list">
+            {% for order in orders %}
+                <div class="order-item">
+                    <strong>Пользователь:</strong> {{ order.user.name }}<br>
+                    <strong>Дата:</strong> {{ order.date|date:"d.m.Y H:i" }}<br>
+                    <strong>Сумма:</strong> {{ order.total_price }} ₽<br>
+                    <strong>Статус:</strong> {{ order.status.name }}<br>
+                    <strong>Доставка:</strong> {{ order.delivery.name }}<br>
+                    <strong>Оплата:</strong> {{ order.payment_method.name }}
+
+                    <div class="order-details">
+                        <h4>Товары:</h4>
+                        <ul>
+                            {% for detail in order.orderdetails_set.all %}
+                                <p>{{ detail.product.name }} — {{ detail.quantity }} шт.</p>
+                            {% empty %}
+                                Нет товаров
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Нет заказов.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -353,4 +353,22 @@
     color: #999;
     font-size: 13px;
 }
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
+.order-item {
+    padding: 15px;
+    border: 1px solid #d6336c;
+    border-radius: 8px;
+    background-color: #edaac29a;
+}
+
+.order-details {
+    margin-top: 10px;
+    padding-left: 10px;
+    background-color: #fcdae69a;
+    border-left: 3px solid #d6336c;
+}
