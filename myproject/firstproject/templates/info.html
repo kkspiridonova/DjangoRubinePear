@@ -1,101 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Рубиновая Груша — Магазин косметики</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
-        }
+{% extends 'base.html' %}
 
-        body {
-            background-color: #fff6f8;
-            color: #333;
-        }
+{% block title %}Главная — Рубиновая Груша{% endblock %}
 
-        header {
-            background-color: #d6336c;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        nav {
-            background-color: #f8d7da;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding: 10px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #d6336c;
-            font-weight: bold;
-        }
-
-        .banner {
-            background-image: url('https://i.pinimg.com/736x/dd/3c/60/dd3c60db7ae231def6881fa7c6b5654d.jpg');
-            background-size: cover;
-            background-position: center;
-            height: 350px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .banner h2 {
-            color: white;
-            font-size: 3em;
-            text-align: center;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
-        }
-
-        .intro {
-            padding: 40px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .intro h3 {
-            font-size: 1.8em;
-            color: #d6336c;
-            margin-bottom: 20px;
-        }
-
-        .intro p {
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-
-        footer {
-            background-color: #d6336c;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>Рубиновая Груша</h1>
-    <p>Магазин натуральной косметики</p>
-</header>
-
-<nav>
-    <a href="#">Главная</a>
-    <a href="#">О нас</a>
-    <a href="#">Доставка</a>
-    <a href="#">Контакты</a>
-</nav>
-
+{% block content %}
 <div class="banner">
     <h2>Красота, вдохновлённая природой</h2>
 </div>
@@ -107,10 +16,5 @@
         Мы предлагаем косметику, созданную с любовью к природе и заботой о коже. Откройте для себя мир качественной натуральной косметики!
     </p>
 </section>
-
-<footer>
-    <p>&copy; 2025 Рубиновая Груша</p>
-</footer>
-
-</body>
+{% endblock %}
 </html>

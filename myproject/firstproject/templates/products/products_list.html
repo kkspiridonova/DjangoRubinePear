@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Каталог{% endblock %}
+{% block content %}
+<section class="catalog-wrapper">
+    <div class="catalog-sidebar">
+        <h3>Навигация</h3>
+        <ul>
+            <li><a href="{% url 'brand_list' %}">Бренды</a></li>
+            <li><a href="{% url 'colour_list' %}">Цвета</a></li>
+            <li><a href="{% url 'category_list' %}">Категории</a></li>
+        </ul>
+    </div>
+    <div class="catalog">
+        <h2>Каталог товаров</h2>
+
+        <div style="margin-bottom: 20px;">
+            <a href="{% url 'products_create' %}">
+                <button class="create-button">Создать</button>
+            </a>
+        </div>
+
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    {% if product.photo %}
+                        <img src="{{ product.photo.url }}" alt="{{ product.name }}">
+                    {% else %}
+                        <img src="{% static 'images/заглушка.png' %}" alt="Нет изображения">
+                    {% endif %}
+
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <p class="price">{{ product.price }} ₽</p>
+                    <button>В корзину</button>
+                    <p><a href="{% url 'products_details' product.pk %}">Дополнительно</a></p>
+                    <p><a href="{% url 'products_update' product.pk %}">Редактировать</a></p>
+                    <p><a href="{% url 'products_delete' product.pk %}">Удалить</a></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Отзывы{% endblock %}
+
+{% block content %}
+<section class="catalog" style="padding: 40px 20px;">
+    <div style="max-width: 1000px; margin: 0 auto;">
+        <h2 style="text-align: center; margin-bottom: 30px;">Отзывы покупателей</h2>
+
+        <div style="text-align: center; margin-bottom: 30px;">
+            <a href="{% url 'reviews_create' %}">
+                <button class="create-button">+ Добавить отзыв</button>
+            </a>
+        </div>
+
+        {% for review in reviews %}
+            <div class="review-card">
+                <div class="review-header">
+                    <h3>{{ review.user.name }}</h3>
+                    <span class="review-rating">★ {{ review.rating.rating }} / 5</span>
+                </div>
+                <p><strong>Товар:</strong> {{ review.product.name }}</p>
+                <p class="review-comment">"{{ review.comment }}"</p>
+                <p class="review-date">{{ review.date|date:"d.m.Y H:i" }}</p>
+            </div>
+        {% empty %}
+            <p style="text-align: center; color: #999;">Пока нет отзывов.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

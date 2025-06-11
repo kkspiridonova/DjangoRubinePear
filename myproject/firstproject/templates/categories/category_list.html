@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}<htyls>{% endblock %}
+{% block content %}
+<section class="catalog-wrapper">
+    <div class="catalog-sidebar">
+        <h3>Навигация</h3>
+        <ul>
+            <li><a href="{% url 'products_list' %}">Товары</a></li>
+            <li><a href="{% url 'colour_list' %}">Цвета</a></li>
+            <li><a href="{% url 'brand_list' %}">Бренды</a></li>
+        </ul>
+    </div>
+    <div class="catalog">
+        <h2>Список категорий</h2>
+
+        <div style="margin-bottom: 20px;">
+            <a href="{% url 'category_create' %}">
+                <button class="create-button">Создать</button>
+            </a>
+        </div>
+
+        <div class="product-grid">
+            {% for category in category %}
+                <div class="product-card">
+
+                    <h3>{{ category.name }}</h3>
+                    <p>{{ category.description }}</p>
+                    <p><a href="{% url 'category_details' category.pk%}">Дополнительно</a></p>
+                    <p><a href="{% url 'category_update' category.pk%}">Редактировать</a></p>
+                    <p><a href="{% url 'category_delete' category.pk%}">Удалить</a></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

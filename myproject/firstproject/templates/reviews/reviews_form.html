@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}
+        Редактировать отзыв
+    {% else %}
+        Добавить отзыв
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<section class="catalog">
+    <div class="product-card" style="max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: 20px;">
+            {% if form.instance.pk %}
+                Редактировать отзыв
+            {% else %}
+                Добавить новый отзыв
+            {% endif %}
+        </h2>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="add-to-cart" type="submit">Сохранить</button>
+        </form>
+
+        <div style="margin-top: 20px;">
+            <a href="{% url 'reviews_list' %}" style="color: #d6336c; text-decoration: underline;">
+                Вернуться к списку отзывов
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

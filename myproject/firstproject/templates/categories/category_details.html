@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block content %}
+<section class="product-detail container">
+    <div class="detail-card">
+        <div class="detail-info">
+            <h2>{{ category.name }}</h2>
+            <p class="description">{{ category.description }}</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

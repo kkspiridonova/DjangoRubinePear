@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Редактировать категорию{% else %}Добавить категорию{% endif %}{% endblock %}
+
+{% block content %}
+<section class="catalog">
+    <div class="product-card" style="max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: 20px;">
+            {% if form.instance.pk %}
+                Редактировать позицию
+            {% else %}
+                Добавить новую позицию
+            {% endif %}
+        </h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="add-to-cart" type="submit">Сохранить</button>
+        </form>
+        <div style="margin-top: 20px;">
+            <a href="{% url 'category_list' %}" style="color: #d6336c; text-decoration: underline;">Вернуться к списку</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

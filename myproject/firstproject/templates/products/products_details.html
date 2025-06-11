@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<section class="product-detail container">
+    <div class="detail-card">
+        <div class="detail-image">
+                 {% if product.photo %}
+                    <img src="{{ product.photo.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <img src="{% static 'images/заглушка.png' %}" alt="Нет изображения">
+                {% endif %}
+        </div>
+        <div class="detail-info">
+            <h2>{{ product.name }}</h2>
+            <p class="price">{{ product.price }} ₽</p>
+            <p class="description">{{ product.description }}</p>
+            <ul class="product-meta">
+                <li><strong>Бренд:</strong> {{ product.brand.name }}</li>
+                <li><strong>Категория:</strong> {{ product.category.name }}</li>
+                <li><strong>Цвет:</strong> {{ product.colour.name }}</li>
+            </ul>
+            <button class="add-to-cart">Добавить в корзину</button>
+        </div>
+    </div>
+</section>
+<section class="product-reviews container" style="margin-top: 40px;">
+    <h3 style="margin-bottom: 20px;">Отзывы о товаре</h3>
+
+    {% if reviews %}
+        {% for review in reviews %}
+            <div class="review-card">
+                <div class="review-header">
+                    <h4>{{ review.user.name }}</h4>
+                    <span class="review-rating">★ {{ review.rating.rating }} / 5</span>
+                </div>
+                <p class="review-comment">"{{ review.comment }}"</p>
+                <p class="review-date">{{ review.date|date:"d.m.Y H:i" }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p style="color: #888;">У этого товара пока нет отзывов.</p>
+    {% endif %}
+</section>
+{% endblock %}
