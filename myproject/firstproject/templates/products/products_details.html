@@ -22,7 +22,13 @@
                 <li><strong>Категория:</strong> {{ product.category.name }}</li>
                 <li><strong>Цвет:</strong> {{ product.colour.name }}</li>
             </ul>
-            <button class="add-to-cart">Добавить в корзину</button>
+            {% if request.user.is_authenticated%}
+                <form method="post" action="{%url 'basket_add' product.pk%}">
+                    {%csrf_token%}
+                    {{form_basket}}
+                    <button type="submit" class="create-button"> В корзину</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 </section>

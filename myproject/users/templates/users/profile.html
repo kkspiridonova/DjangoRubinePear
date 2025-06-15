@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>Профиль пользователя</h2>
+
+    <div class="profile-card">
+        <div class="profile-info">
+            <p><span>Имя пользователя:</span> {{ user.username }}</p>
+            <p><span>Email:</span> {{ user.email }}</p>
+        </div>
+
+        <a href="{% url 'logout' %}" class="logout-btn">Выйти из аккаунта</a>
+    </div>
+</div>
+{% endblock %}

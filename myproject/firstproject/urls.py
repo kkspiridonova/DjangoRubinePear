@@ -36,5 +36,4 @@ urlpatterns = [
     path('orders/delivery',DeliveryListView.as_view(),name='delivery_list'),
     path('orders/status',StatusListView.as_view(),name='status_list'),
     path('oders/paymethod',PayMethodListView.as_view(),name='paymethod_list'),
-
 ]

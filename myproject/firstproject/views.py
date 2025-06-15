@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from .forms import *
+from basket.forms import BasketAddProductForm
 
 def info_view(request):
     return render(request, "info.html")
@@ -13,14 +15,16 @@ class ProductsListView(ListView):
     template_name = 'products/products_list.html'
     context_object_name = 'products'
 
-class ProductsDetailView(DetailView):
+class ProductsDetailView(LoginRequiredMixin, DetailView):
     model = Products
     template_name = 'products/products_details.html'
     context_object_name = 'product'
+    login_url = '/users/login/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['reviews'] = Reviews.objects.filter(product=self.object).select_related('user', 'rating')
+        context['form_basket'] = BasketAddProductForm()
         return context
 
 class ProductsCreateView(CreateView):
