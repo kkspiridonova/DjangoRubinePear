@@ -420,3 +420,91 @@
 .logout-btn:hover {
     background-color: #b02a57;
 }
+<style>
+.basket-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff0f3;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(214, 51, 108, 0.2);
+}
+
+.basket-container h1 {
+    color: #d6336c;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.empty-message {
+    text-align: center;
+    font-size: 1.2em;
+    color: #999;
+}
+
+.basket-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.basket-table th,
+.basket-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.basket-table th {
+    background-color: #f8d7da;
+    color: #d6336c;
+}
+
+.basket-table td {
+    background-color: #fff;
+}
+
+.delete-button {
+    background-color: #d6336c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #b32450;
+}
+
+.total-price {
+    text-align: right;
+    color: #d6336c;
+    font-size: 1.3em;
+    margin-top: 20px;
+}
+
+.basket-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.order-button,
+.clear-button {
+    background-color: #d6336c;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.order-button:hover,
+.clear-button:hover {
+    background-color: #b32450;
+}
+</style>

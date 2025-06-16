@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import *
 from .forms import *
 from basket.forms import BasketAddProductForm
@@ -27,11 +27,14 @@ class ProductsDetailView(LoginRequiredMixin, DetailView):
         context['form_basket'] = BasketAddProductForm()
         return context
 
-class ProductsCreateView(CreateView):
+class ProductsCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
     model = Products
     form_class = ProductsForm
     template_name = 'products/products_form.html'
     success_url = reverse_lazy('products_list')
+    
+    def test_func(self):
+        return self.request.user.is_superuser
 
 class ProductsUpdateView(UpdateView):
     model = Products

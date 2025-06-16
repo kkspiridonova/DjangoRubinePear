@@ -17,7 +17,7 @@
         <div class="orders-list">
             {% for order in orders %}
                 <div class="order-item">
-                    <strong>Пользователь:</strong> {{ order.user.name }}<br>
+                    <strong>Пользователь:</strong> {{ order.user.username }}<br>
                     <strong>Дата:</strong> {{ order.date|date:"d.m.Y H:i" }}<br>
                     <strong>Сумма:</strong> {{ order.total_price }} ₽<br>
                     <strong>Статус:</strong> {{ order.status.name }}<br>

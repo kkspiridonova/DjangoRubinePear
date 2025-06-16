@@ -13,20 +13,22 @@
     </div>
     <div class="catalog">
         <h2>Цвета</h2>
-
-        <div style="margin-bottom: 20px;">
-            <a href="{% url 'colour_create' %}">
-                <button class="create-button">Создать</button>
-            </a>
-        </div>
-
+        {% if user.is_superuser %}
+            <div style="margin-bottom: 20px;">
+                <a href="{% url 'colour_create' %}">
+                    <button class="create-button">Создать</button>
+                </a>
+            </div>
+        {% endif %}
         <div class="product-grid">
             {% for colour in colour %}
                 <div class="product-card">
 
                     <h3>{{ colour.name }}</h3>
-                    <p><a href="{% url 'colour_update' colour.pk %}">Редактировать</a></p>
-                    <p><a href="{% url 'colour_delete' colour.pk %}">Удалить</a></p>
+                    {% if user.is_superuser %}
+                        <p><a href="{% url 'colour_update' colour.pk %}">Редактировать</a></p>
+                        <p><a href="{% url 'colour_delete' colour.pk %}">Удалить</a></p>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

@@ -13,13 +13,13 @@
     </div>
     <div class="catalog">
         <h2>Список брендов</h2>
-
-        <div style="margin-bottom: 20px;">
-            <a href="{% url 'brand_create' %}">
-                <button class="create-button">Создать</button>
-            </a>
-        </div>
-
+        {% if user.is_superuser %}
+            <div style="margin-bottom: 20px;">
+                <a href="{% url 'brand_create' %}">
+                    <button class="create-button">Создать</button>
+                </a>
+            </div>
+        {% endif %}
         <div class="product-grid">
             {% for brand in brand %}
                 <div class="product-card">
@@ -27,8 +27,10 @@
                     <h3>{{ brand.name }}</h3>
                     <p>{{ brand.description }}</p>
                     <p><a href="{% url 'brand_details' brand.pk%}">Дополнительно</a></p>
-                    <p><a href="{% url 'brand_update' brand.pk%}">Редактировать</a></p>
-                    <p><a href="{% url 'brand_delete' brand.pk%}">Удалить</a></p>
+                    {% if user.is_superuser %}
+                        <p><a href="{% url 'brand_update' brand.pk%}">Редактировать</a></p>
+                        <p><a href="{% url 'brand_delete' brand.pk%}">Удалить</a></p>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

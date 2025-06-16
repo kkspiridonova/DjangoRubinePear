@@ -1,45 +1,52 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Ваша корзина</h1>
+<div class="basket-container">
+    <h1>Ваша корзина</h1>
 
-{% if basket|length == 0 %}
-    <p>Ваша корзина пуста.</p>
-{% else %}
-    <table>
-        <thead>
-            <tr>
-                <th>Товар</th>
-                <th>Цена</th>
-                <th>Количество</th>
-                <th>Сумма</th>
-                <th>Удалить</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in basket %}
+    {% if basket|length == 0 %}
+        <p class="empty-message">Ваша корзина пуста.</p>
+    {% else %}
+        <table class="basket-table">
+            <thead>
                 <tr>
-                    <td>{{ item.product.name }}</td>
-                    <td>{{ item.price }} ₽</td>
-                    <td>{{ item.count }}</td>
-                    <td>{{ item.total_price }} ₽</td>
-                    <td>
-                        <form action="{% url 'basket_remove' item.product.id %}" method="post">
-                            {% csrf_token %}
-                            <button type="submit">Удалить</button>
-                        </form>
-                    </td>
+                    <th>Товар</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Сумма</th>
+                    <th>Удалить</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for item in basket %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.price }} ₽</td>
+                        <td>{{ item.count }}</td>
+                        <td>{{ item.total_price }} ₽</td>
+                        <td>
+                            <form action="{% url 'basket_remove' item.product.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-button">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <h3>Общая сумма: {{ basket.get_total_price }} ₽</h3>
+        <h3 class="total-price">Общая сумма: {{ basket.get_total_price }} ₽</h3>
 
-    <a href="{% url 'order_open' %}">Оформить заказ</a>
-    <form action="{% url 'basket_clear' %}" method="post" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit">Очистить корзину</button>
-    </form>
-{% endif %}
+        <div class="basket-actions">
+          <form method="post" action="{% url 'basket_buy' %}">
+                {% csrf_token %}
+                <button type="submit" class="order-button">Оформить заказ</button>
+            </form>
+            <form action="{% url 'basket_clear' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="clear-button">Очистить корзину</button>
+            </form>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

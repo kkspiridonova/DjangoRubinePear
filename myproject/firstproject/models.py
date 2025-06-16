@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 #Роли
 class Roles(models.Model):
@@ -160,7 +162,7 @@ class Delivery(models.Model):
 
 #Заказы
 class Order(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.PROTECT, verbose_name='Пользователь')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Пользователь')
     date = models.DateTimeField(verbose_name='Дата создания заказа')
     total_price = models.FloatField(verbose_name='Итоговая сумма')
     status = models.ForeignKey(Status, on_delete=models.PROTECT, verbose_name='Статус доставки')
