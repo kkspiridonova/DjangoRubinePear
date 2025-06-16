@@ -114,7 +114,7 @@ class Rating(models.Model):
 
 #Отзывы
 class Reviews(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.PROTECT, verbose_name='Пользователь')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Пользователь')
     product = models.ForeignKey(Products, on_delete=models.PROTECT, verbose_name='Товар')
     rating = models.ForeignKey(Rating, on_delete=models.PROTECT,verbose_name='Оценка')
     comment = models.CharField(max_length=150,verbose_name='Комментарий')

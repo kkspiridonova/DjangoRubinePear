@@ -5,9 +5,13 @@ from django.utils import timezone
 from firstproject.models import Products, Order, OrderDetails, Status
 from .basket import Basket
 from .forms import BasketAddProductForm, OrderForm
+from django.http import HttpResponseForbidden
+
 
 
 def basket_detail(request):
+    if request.user.is_superuser:
+        return HttpResponseForbidden("Администраторам доступ в корзину запрещен.")
     basket = Basket(request)
     return render(request, 'basket/detail.html', {'basket': basket})
 
@@ -29,6 +33,8 @@ def basket_clear(request):
 @require_POST
 @login_required
 def basket_add(request, product_id):
+    if request.user.is_superuser:
+        return HttpResponseForbidden("Администраторам доступ в корзину запрещен.")
     basket = Basket(request)
     product = get_object_or_404(Products, pk=product_id)
     form = BasketAddProductForm(request.POST)
@@ -44,10 +50,12 @@ def basket_add(request, product_id):
 
 @login_required
 def basket_buy(request):
+    if request.user.is_superuser:
+        return HttpResponseForbidden("Администраторам доступ в корзину запрещен.")
     basket = Basket(request)
 
     if len(basket) <= 0:
-        return redirect('list_product.filter')  # страница товаров
+        return redirect('list_product.filter') 
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -56,7 +64,7 @@ def basket_buy(request):
             order.user = request.user
             order.date = timezone.now()
             order.total_price = basket.get_total_price()
-            order.status = Status.objects.get_or_create(name='Ожидает обработки')[0]  # статус по умолчанию
+            order.status = Status.objects.get_or_create(name='Ожидает обработки')[0] 
             order.save()
 
             for item in basket:
@@ -67,8 +75,7 @@ def basket_buy(request):
                 )
 
             basket.clear()
-            return redirect('info_view')  # куда перенаправлять после покупки
-
+            return redirect('info_view') 
     else:
         form = OrderForm()
 

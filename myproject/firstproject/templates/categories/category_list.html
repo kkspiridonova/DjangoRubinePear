@@ -26,10 +26,10 @@
 
                     <h3>{{ category.name }}</h3>
                     <p>{{ category.description }}</p>
-                    <p><a href="{% url 'category_details' category.pk%}">Дополнительно</a></p>
+                    <p><a href="{% url 'category_details' category.pk%}" class="link">Дополнительно</a></p>
                     {% if user.is_superuser %}
-                        <p><a href="{% url 'category_update' category.pk%}">Редактировать</a></p>
-                        <p><a href="{% url 'category_delete' category.pk%}">Удалить</a></p>
+                        <p><a href="{% url 'category_update' category.pk%}" class="link">Редактировать</a></p>
+                        <p><a href="{% url 'category_delete' category.pk%}" class="link">Удалить</a></p>
                     {% endif %}
                 </div>
             {% endfor %}

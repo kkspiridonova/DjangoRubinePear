@@ -10,14 +10,14 @@
 
         <div style="text-align: center; margin-bottom: 30px;">
             <a href="{% url 'reviews_create' %}">
-                <button class="create-button">+ Добавить отзыв</button>
+                {% if not user.is_superuser %}<button class="create-button">+ Добавить отзыв</button>{% endif %}
             </a>
         </div>
 
         {% for review in reviews %}
             <div class="review-card">
                 <div class="review-header">
-                    <h3>{{ review.user.name }}</h3>
+                    <h3>{{ review.user.username }}</h3>
                     <span class="review-rating">★ {{ review.rating.rating }} / 5</span>
                 </div>
                 <p><strong>Товар:</strong> {{ review.product.name }}</p>

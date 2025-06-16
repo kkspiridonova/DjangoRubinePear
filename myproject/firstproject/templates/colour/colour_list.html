@@ -26,8 +26,8 @@
 
                     <h3>{{ colour.name }}</h3>
                     {% if user.is_superuser %}
-                        <p><a href="{% url 'colour_update' colour.pk %}">Редактировать</a></p>
-                        <p><a href="{% url 'colour_delete' colour.pk %}">Удалить</a></p>
+                        <p><a href="{% url 'colour_update' colour.pk %}" class="link">Редактировать</a></p>
+                        <p><a href="{% url 'colour_delete' colour.pk %}" class="link">Удалить</a></p>
                     {% endif %}
                 </div>
             {% endfor %}

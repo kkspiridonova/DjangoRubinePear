@@ -420,7 +420,7 @@
 .logout-btn:hover {
     background-color: #b02a57;
 }
-<style>
+
 .basket-container {
     max-width: 1000px;
     margin: 40px auto;
@@ -507,4 +507,15 @@
 .clear-button:hover {
     background-color: #b32450;
 }
-</style>
+a.link {
+    color: #d6336c;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+a.link:hover {
+    text-decoration: underline;
+    color: #a31e4b;
+}
+

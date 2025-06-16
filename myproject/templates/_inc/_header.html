@@ -7,7 +7,7 @@
     <a href="{% url 'info_view' %}">Главная</a>
     <a href="{% url 'products_list' %}">Каталог</a>
     <a href="{% url 'reviews_list' %}">Отзывы</a>
-    <a href="{% url 'basket_detail' %}">Корзина</a>
+    {% if user.is_authenticated and not user.is_superuser %} <a href="{% url 'basket_detail' %}">Корзина</a> {% endif %}
     {% if user.is_superuser %}<a href="{% url 'orders_list' %}">Заказы</a> {% endif %}
     <a href="{% url 'profile' %}">Профиль</a>
 </nav>

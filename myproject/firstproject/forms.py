@@ -29,7 +29,7 @@ class OrderDetailsForm(forms.ModelForm):
 class ReviewsForm(forms.ModelForm):
     class Meta:
         model = Reviews
-        fields = ['user','product','rating','comment']
+        fields = ['product','rating','comment']
 
 #Форма избранных
 class FavouritesForm(forms.ModelForm):

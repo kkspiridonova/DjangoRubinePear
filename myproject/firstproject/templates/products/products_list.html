@@ -32,11 +32,10 @@
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.description }}</p>
                     <p class="price">{{ product.price }} ₽</p>
-                    <button>В корзину</button>
-                    <p><a href="{% url 'products_details' product.pk %}">Дополнительно</a></p>
+                    <p><a href="{% url 'products_details' product.pk %}" class="link">Дополнительно</a></p>
                     {% if user.is_superuser %}
-                        <p><a href="{% url 'products_update' product.pk %}">Редактировать</a></p>
-                        <p><a href="{% url 'products_delete' product.pk %}">Удалить</a></p>
+                        <p><a href="{% url 'products_update' product.pk %}" class="link">Редактировать</a></p>
+                        <p><a href="{% url 'products_delete' product.pk %}" class="link">Удалить</a></p>
                     {% endif %}
                 </div>
             {% endfor %}

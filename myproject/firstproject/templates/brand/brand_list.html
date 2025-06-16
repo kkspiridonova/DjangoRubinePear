@@ -26,10 +26,10 @@
 
                     <h3>{{ brand.name }}</h3>
                     <p>{{ brand.description }}</p>
-                    <p><a href="{% url 'brand_details' brand.pk%}">Дополнительно</a></p>
+                    <p><a href="{% url 'brand_details' brand.pk%}" class="link">Дополнительно</a></p>
                     {% if user.is_superuser %}
-                        <p><a href="{% url 'brand_update' brand.pk%}">Редактировать</a></p>
-                        <p><a href="{% url 'brand_delete' brand.pk%}">Удалить</a></p>
+                        <p><a href="{% url 'brand_update' brand.pk%}" class="link">Редактировать</a></p>
+                        <p><a href="{% url 'brand_delete' brand.pk%}" class="link">Удалить</a></p>
                     {% endif %}
                 </div>
             {% endfor %}
