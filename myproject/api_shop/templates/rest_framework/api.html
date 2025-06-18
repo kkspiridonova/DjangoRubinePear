@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% load rest_framework %}
+
+{% block title %}
+  {% if name %}{{ name }} – {% endif %}Django REST framework
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .container {
+        max-width: 700px;
+        margin: 40px auto !important;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+        padding: 32px 28px 32px 28px;
+    }
+    .content-main, .region, .well, .tab-content, .form-horizontal {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+    .btn, .btn-primary, .btn-danger, .btn-default {
+        background: #d6336c !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 4px !important;
+        margin-right: 5px;
+        font-weight: 500;
+        transition: background 0.2s;
+        min-width: 70px;
+        min-height: 36px;
+    }
+    .btn:hover, .btn-primary:hover, .btn-danger:hover, .btn-default:hover {
+        background: #b02759 !important;
+        color: #fff !important;
+    }
+    .breadcrumb {
+        background: #f8d7da !important;
+        border-radius: 4px;
+        padding: 8px 16px;
+        margin-bottom: 20px;
+    }
+    .page-header h1, h1, h2 {
+        color: #d6336c;
+        font-size: 2em;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+    .prettyprint {
+        background: #fff6f8 !important;
+        color: #333 !important;
+        border-radius: 6px;
+        padding: 15px;
+        border: 1px solid #f8d7da;
+    }
+    .form-actions {
+        margin-top: 15px;
+    }
+    label {
+        color: #d6336c;
+        font-weight: 500;
+    }
+    input, textarea, select {
+        border: 1px solid #f8d7da !important;
+        border-radius: 4px !important;
+        padding: 6px 10px !important;
+        margin-bottom: 10px !important;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    a, a:visited {
+        color: #d6336c !important;
+        text-decoration: underline;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    a:hover {
+        color: #b02759 !important;
+        text-decoration: underline;
+    }
+    ul, ol {
+        padding-left: 20px;
+        margin: 10px 0 10px 0;
+        list-style: none;
+    }
+    ul li, ol li {
+        margin-bottom: 6px;
+        font-size: 1em;
+    }
+    /* Пагинация */
+    .pagination, .paginator, .paginator ul {
+        display: flex !important;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        padding: 0 !important;
+        margin: 16px 0 !important;
+        list-style: none !important;
+        background: none !important;
+        border: none !important;
+    }
+    .pagination li, .paginator li {
+        display: inline-block;
+        margin: 0 4px;
+    }
+    .pagination li a, .paginator li a, .pagination li span, .paginator li span {
+        color: #d6336c !important;
+        background: #f8d7da !important;
+        border-radius: 4px;
+        padding: 4px 10px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+    }
+    .pagination li.active a, .paginator li.active a, .pagination li.active span, .paginator li.active span {
+        background: #d6336c !important;
+        color: #fff !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+  <div class="wrapper">
+    <div class="container">
+
+      <div class="navbar navbar-static-top navbar-inverse" role="navigation" aria-label="{% trans "navbar" %}">
+        <div class="container">
+          <span>
+            <a class='navbar-brand' rel="nofollow" href='https://www.django-rest-framework.org/'>
+                Django REST framework
+            </a>
+          </span>
+          <ul class="nav navbar-nav pull-right">
+            {% if user.is_authenticated %}
+              {% optional_logout request user csrf_token %}
+            {% else %}
+              {% optional_login request %}
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+
+      <ul class="breadcrumb">
+        {% for breadcrumb_name, breadcrumb_url in breadcrumblist %}
+          {% if forloop.last %}
+            <li class="active"><a href="{{ breadcrumb_url }}">{{ breadcrumb_name }}</a></li>
+          {% else %}
+            <li><a href="{{ breadcrumb_url }}">{{ breadcrumb_name }}</a></li>
+          {% endif %}
+        {% empty %}
+          &nbsp;
+        {% endfor %}
+      </ul>
+
+      <div class="region" aria-label="{% trans "request form" %}">
+        
+
+        {% if options_form %}
+          <form class="button-form" action="{{ request.get_full_path }}" data-method="OPTIONS">
+            <button class="btn btn-primary js-tooltip" title="Make an OPTIONS request on the {{ name }} resource">OPTIONS</button>
+          </form>
+        {% endif %}
+
+        {% if delete_form %}
+          <button class="btn btn-danger button-form js-tooltip" title="Make a DELETE request on the {{ name }} resource" data-toggle="modal" data-target="#deleteModal">DELETE</button>
+
+          <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <h4 class="text-center">Are you sure you want to delete this {{ name }}?</h4>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <form class="button-form" action="{{ request.get_full_path }}" data-method="DELETE">
+                    <button class="btn btn-danger">Delete</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if extra_actions %}
+          <div class="dropdown" style="float: right; margin-right: 10px">
+            <button class="btn btn-default" id="extra-actions-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              {% trans "Extra Actions" %}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="extra-actions-menu">
+              {% for action_name, url in extra_actions|items %}
+              <li><a href="{{ url }}">{{ action_name }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        {% if filter_form %}
+          <button style="float: right; margin-right: 10px" data-toggle="modal" data-target="#filtersModal" class="btn btn-default">
+            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+            {% trans "Filters" %}
+          </button>
+        {% endif %}
+      </div>
+
+      <div class="content-main" role="main" aria-label="{% trans "main content" %}">
+        <div class="page-header">
+          <h1>{{ name }}</h1>
+        </div>
+        <div class="pull-left">
+          {{ description }}
+        </div>
+
+        {% if paginator %}
+          <nav class="pull-right">
+            {% get_pagination_html paginator %}
+          </nav>
+        {% endif %}
+
+        <div class="request-info" aria-label="{% trans "request info" %}">
+          <pre class="prettyprint"><b>{{ request.method }}</b> {{ request.get_full_path }}</pre>
+        </div>
+
+        <div class="response-info" aria-label="{% trans "response info" %}">
+          <pre class="prettyprint">
+            <span class="meta nocode"><b>HTTP {{ response.status_code }} {{ response.status_text }}</b>
+              {% for key, val in response_headers|items %}
+                <b>{{ key }}:</b> <span class="lit">{{ val|urlize }}</span>
+              {% endfor %}
+            </span>
+            {{ content|urlize }}
+          </pre>
+        </div>
+      </div>
+
+      {% if display_edit_forms %}
+        {% if post_form or raw_data_post_form %}
+          <div {% if post_form %}class="tabbable"{% endif %}>
+            {% if post_form %}
+              <ul class="nav nav-tabs form-switcher">
+                <li><a name='html-tab' href="#post-object-form" data-toggle="tab">HTML form</a></li>
+                <li><a name='raw-tab' href="#post-generic-content-form" data-toggle="tab">Raw data</a></li>
+              </ul>
+            {% endif %}
+            <div class="well tab-content">
+              {% if post_form %}
+                <div class="tab-pane" id="post-object-form">
+                  <form action="{{ request.get_full_path }}" method="POST" enctype="multipart/form-data" class="form-horizontal" novalidate>
+                    <fieldset>
+                      {% csrf_token %}
+                      {{ post_form }}
+                      <div class="form-actions">
+                        <button class="btn btn-primary js-tooltip" title="Make a POST request on the {{ name }} resource">POST</button>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+              {% endif %}
+              <div {% if post_form %}class="tab-pane"{% endif %} id="post-generic-content-form">
+                <form action="{{ request.get_full_path }}" method="POST" class="form-horizontal">
+                  <fieldset>
+                    {% include "rest_framework/raw_data_form.html" %}
+                    <div class="form-actions">
+                      <button class="btn btn-primary js-tooltip" title="Make a POST request on the {{ name }} resource">POST</button>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if put_form or raw_data_put_form or raw_data_patch_form %}
+          <div {% if put_form %}class="tabbable"{% endif %}>
+            {% if put_form %}
+              <ul class="nav nav-tabs form-switcher">
+                <li><a name='html-tab' href="#put-object-form" data-toggle="tab">HTML form</a></li>
+                <li><a name='raw-tab' href="#put-generic-content-form" data-toggle="tab">Raw data</a></li>
+              </ul>
+            {% endif %}
+            <div class="well tab-content">
+              {% if put_form %}
+                <div class="tab-pane" id="put-object-form">
+                  <form action="{{ request.get_full_path }}" data-method="PUT" enctype="multipart/form-data" class="form-horizontal" novalidate>
+                    <fieldset>
+                      {{ put_form }}
+                      <div class="form-actions">
+                        <button class="btn btn-primary js-tooltip" title="Make a PUT request on the {{ name }} resource">PUT</button>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+              {% endif %}
+              <div {% if put_form %}class="tab-pane"{% endif %} id="put-generic-content-form">
+                <form action="{{ request.get_full_path }}" data-method="PUT" class="form-horizontal">
+                  <fieldset>
+                    {% include "rest_framework/raw_data_form.html" %}
+                    <div class="form-actions">
+                      {% if raw_data_put_form %}
+                        <button class="btn btn-primary js-tooltip" title="Make a PUT request on the {{ name }} resource">PUT</button>
+                      {% endif %}
+                      {% if raw_data_patch_form %}
+                        <button data-method="PATCH" class="btn btn-primary js-tooltip" title="Make a PATCH request on the {{ name }} resource">PATCH</button>
+                      {% endif %}
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script type="application/json" id="drf_csrf">
+    {
+      "csrfHeaderName": "{{ csrf_header_name|default:'X-CSRFToken' }}",
+      "csrfToken": "{% if request %}{{ csrf_token }}{% endif %}"
+    }
+  </script>
+  <script src="{% static "rest_framework/js/jquery-3.7.1.min.js" %}"></script>
+  <script src="{% static "rest_framework/js/ajax-form.js" %}"></script>
+  <script src="{% static "rest_framework/js/csrf.js" %}"></script>
+  <script src="{% static "rest_framework/js/bootstrap.min.js" %}"></script>
+  <script src="{% static "rest_framework/js/prettify-min.js" %}"></script>
+  <script src="{% static "rest_framework/js/default.js" %}"></script>
+  <script src="{% static "rest_framework/js/load-ajax-form.js" %}"></script>
+{% endblock %}

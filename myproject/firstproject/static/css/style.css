@@ -518,4 +518,145 @@ a.link:hover {
     text-decoration: underline;
     color: #a31e4b;
 }
+/* Сброс и базовые настройки */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #fff6f8;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Хлебные крошки */
+ul.breadcrumb {
+    list-style: none;
+    padding: 8px 12px;
+    background-color: #f8d7da;
+    border-radius: 5px;
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+ul.breadcrumb li a {
+    color: #d6336c;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+ul.breadcrumb li:not(:last-child)::after {
+    content: "›";
+    margin-left: 8px;
+    color: #999;
+}
+
+/* Заголовки и описание */
+section h2 {
+    color: #d6336c;
+    margin-bottom: 10px;
+}
+
+section p {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+/* Кнопки */
+.btn {
+    background-color: #d6336c;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.btn:hover {
+    background-color: #b02756;
+}
+
+.btn.danger {
+    background-color: #dc3545;
+}
+
+.btn.danger:hover {
+    background-color: #a72a38;
+}
+
+/* Таб навигация */
+.tab-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #d6336c;
+}
+
+.tab-nav a {
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #d6336c;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    font-weight: 600;
+}
+
+.tab-nav a.active {
+    background-color: #d6336c;
+    color: white;
+    border-color: #d6336c #d6336c white;
+}
+
+/* Контент табов */
+.tab-content {
+    border: 1px solid #d6336c;
+    padding: 20px;
+    border-radius: 0 4px 4px 4px;
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+/* Формы */
+form {
+    margin-top: 10px;
+}
+
+form button.btn {
+    margin-top: 10px;
+}
+
+/* Преформатированный текст (ответы, заголовки) */
+pre {
+    background-color: #fef2f4;
+    border: 1px solid #f5c2c7;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-size: 0.9em;
+    margin-bottom: 30px;
+}
+
+pre b {
+    color: #b02a37;
+}
+
+/* Немного отступов для секций */
+section {
+    max-width: 900px;
+    margin: 0 auto 50px auto;
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(214, 51, 108, 0.2);
+}
 
