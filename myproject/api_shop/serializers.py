@@ -23,7 +23,7 @@ class ColourSerializer(serializers.ModelSerializer):
 class ProductsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Products
-        fields = ['name', 'description', 'price', 'photo', 'brand', 'category', 'colour']
+        fields = ['name', 'description', 'price', 'photo', 'brand', 'category', 'colour','quantity']
 
 
 class RatingSerializer(serializers.ModelSerializer):

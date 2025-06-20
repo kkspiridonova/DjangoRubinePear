@@ -35,16 +35,31 @@ def basket_clear(request):
 def basket_add(request, product_id):
     if request.user.is_superuser:
         return HttpResponseForbidden("Администраторам доступ в корзину запрещен.")
+
     basket = Basket(request)
     product = get_object_or_404(Products, pk=product_id)
     form = BasketAddProductForm(request.POST)
 
     if form.is_valid():
-        basket.add(
-            product=product,
-            count=form.cleaned_data['count'],
-            update_count=form.cleaned_data['reload']
-        )
+        count = form.cleaned_data['count']
+        update = form.cleaned_data['reload']
+        current_quantity = product.quantity
+        existing_count = basket.basket.get(str(product.id), {}).get('count', 0)
+        new_count = count if update else existing_count + count
+
+        if new_count > current_quantity:
+            # ⚠ Если товара не хватает, не добавляем и просто отрисовываем страницу
+            warning = f"Нельзя добавить {count} шт. товара — на складе только {current_quantity}."
+            return render(request, 'basket/detail.html', {
+                'basket': basket,
+                'warning': warning
+            })
+
+        # Если всё нормально — добавляем товар и редиректим
+        basket.add(product=product, count=count, update_count=update)
+        return redirect('basket_detail')
+
+    # Если форма невалидна
     return redirect('basket_detail')
 
 

@@ -41,7 +41,7 @@ class FavouritesForm(forms.ModelForm):
 class ProductsForm(forms.ModelForm):
     class Meta:
         model = Products
-        fields = ['name','description','price','brand','category','colour','photo']
+        fields = ['name', 'description', 'price', 'brand', 'category', 'colour', 'photo', 'quantity']
 
 #Форма ролей
 class RolesForm(forms.ModelForm):

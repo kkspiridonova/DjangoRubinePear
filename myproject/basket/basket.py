@@ -31,17 +31,28 @@ class Basket:
 
     def add(self, product, count=1, update_count=False):
         product_id = str(product.id)
-        if product_id not in self.basket:
+        current_quantity = product.quantity 
+
+        existing_count = self.basket.get(product_id, {}).get('count', 0)
+
+        if update_count:
+            if count > current_quantity:
+                return 
             self.basket[product_id] = {
-                'count': 0,
+                'count': count,
+                'price': str(product.price)
+            }
+        else:
+            new_count = existing_count + count
+            if new_count > current_quantity:
+                return  
+            self.basket[product_id] = {
+                'count': new_count,
                 'price': str(product.price)
             }
 
-        if update_count:
-            self.basket[product_id]['count'] = count
-        else:
-            self.basket[product_id]['count'] += count
         self.save()
+
 
     def remove(self, product):
         product_id = str(product.id)

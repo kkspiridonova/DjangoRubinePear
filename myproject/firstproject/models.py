@@ -83,6 +83,7 @@ class Products(models.Model):
     brand=models.ForeignKey(Brand, on_delete=models.PROTECT, verbose_name='Бренд')
     category=models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Категория')
     colour=models.ForeignKey(Colour, on_delete=models.PROTECT, verbose_name='Цвет')
+    quantity = models.IntegerField(verbose_name='Количество', default=1)
 
     def __str__(self):
         return f"{self.name} - ({self.price} рублей.)"
